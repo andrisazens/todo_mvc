@@ -13,6 +13,15 @@ angular.module('todomvc')
 
 		$scope.newTodo = '';
 
+		$scope.$on('$routeChangeSuccess', function () {			
+			var status = $scope.status = $routeParams.status || '';
+			console.log($routeParams);
+			console.log(status);
+			$scope.statusFilter = (status === 'active') ?
+				{ completed: false } : (status === 'completed') ?
+				{ completed: true } : {};
+		});
+
 		$scope.addTodo = function () {
 			console.log("add todo");
 			let newTodo = {
