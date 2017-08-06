@@ -67,6 +67,17 @@ angular.module('todomvc')
 				store.todos.splice(store.todos.indexOf(todo), 1);
 				store._saveToLocalStorage(store.todos);
 			},
+
+			update: function (todo, index) {
+				var deferred = $q.defer();
+
+				store.todos[index] = todo;
+				store._saveToLocalStorage(store.todos);
+
+				deferred.resolve(true);
+
+				return deferred.promise;
+			}
 		};
 
 		return store;

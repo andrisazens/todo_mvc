@@ -18,14 +18,15 @@ angular.module('todomvc')
 			console.log($routeParams);
 			console.log(status);
 			$scope.statusFilter = (status === 'active') ?
-				{ completed: false } : (status === 'completed') ?
-				{ completed: true } : {};
+				{ isCompleted: false } : (status === 'completed') ?
+				{ isCompleted: true } : {};
 		});
 
 		$scope.addTodo = function () {
 			console.log("add todo");
 			let newTodo = {
-				title: $scope.newTodo.trim()				
+				title: $scope.newTodo.trim(),
+				isCompleted: false				
 			};
 
 			if (!newTodo.title) {
@@ -46,4 +47,14 @@ angular.module('todomvc')
 		$scope.removeTodo = function (todo) {
 			store.delete(todo);
 		};
+
+		$scope.toggleCompleted = function(todo, isCompleted) {
+			if (angular.isDefined(isCompleted)) {
+				todo.isCompleted = isCompleted;
+			}
+			store.update(todo, todos.indexOf(todo))
+				.then(function success() {}, function error() {
+					todo.isCompleted = !todo.isCompleted;
+				});
+		}
 	});
