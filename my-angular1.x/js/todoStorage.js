@@ -11,12 +11,53 @@ angular.module('todomvc')
 	.factory('todoStorage', function ($http, $injector) {
 		'use strict';
 
-		// Detect if an API backend is present. If so, return the API module, else
-		// hand off the localStorage adapter
+		// var deferred = $q.defer();
+		// deferred.resolve($injector.get('localStorage'));
+		// return deferred.promise;
 		return $http.get('/api')
 			.then(function () {
 				return $injector.get('api');
 			}, function () {
 				return $injector.get('localStorage');
 			});
+	}).factory('api', function ($resource) {
+		'use strict';
+
+		var store = {
+			todos: []			
+		};
+
+		return store;
+	}).factory('localStorage', function ($q) {
+		'use strict';
+
+		var STORAGE_ID = 'todos-angularjs';
+
+		var store = {
+			todos: [],
+
+			_getFromLocalStorage: function () {
+				return JSON.parse(localStorage.getItem(STORAGE_ID) || '[]');
+			},
+
+			_saveToLocalStorage: function (todos) {
+				localStorage.setItem(STORAGE_ID, JSON.stringify(todos));
+			},
+
+			insert: function (todo) {
+				todos.add(todo);
+				_saveToLocalStorage(todos);
+			},
+
+			get: function () {
+				var deferred = $q.defer();
+
+				angular.copy(store._getFromLocalStorage(), store.todos);
+				deferred.resolve(store.todos);
+
+				return deferred.promise;
+			},
+		};
+
+		return store;
 	});	
