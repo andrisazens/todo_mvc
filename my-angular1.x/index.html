@@ -18,7 +18,7 @@
 					<h1>todos</h1>
 					<!-- <input class="new-todo" placeholder="What needs to be done?" autofocus> -->
 					<form id="todo-form" ng-submit="addTodo()">
-						<input id="new-todo" placeholder="What needs to be done?" ng-model="newTodo" ng-disabled="saving" autofocus>
+						<input id="new-todo" placeholder="What needs to be done?" ng-model="newTodo" ng-disabled="isSaving" autofocus>
 					</form>
 				</header>
 				<!-- This section should be hidden by default and shown when there are todos -->
@@ -30,7 +30,7 @@
 							<div class="view" >
 								<input class="toggle" type="checkbox">
 								<label>{{ item.title }}</label>
-								<button class="destroy"></button>
+								<button class="destroy" ng-click="removeTodo()"></button>
 							</div>
 							<input class="edit" value="Rule the web">
 						</li>					

@@ -23,14 +23,18 @@ angular.module('todomvc')
 				return;
 			}
 
-			$scope.saving = true;
+			$scope.isSaving = true;
 
 			store.insert(newTodo)
 			.then(function success() {
 				console.log("success");
 				$scope.newTodo = '';
 			}).finally(function () {
-				$scope.saving = false;
+				$scope.isSaving = false;
 			});
 		}
+
+		$scope.removeTodo = function (todo) {
+			store.delete(todo);
+		};
 	});

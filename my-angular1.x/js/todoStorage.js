@@ -49,7 +49,7 @@ angular.module('todomvc')
 							
 				store.todos.push(todo);
 				store._saveToLocalStorage(store.todos);
-				
+
 				deferred.resolve(true);
 				return deferred.promise;
 			},
@@ -61,6 +61,11 @@ angular.module('todomvc')
 				deferred.resolve(store.todos);
 
 				return deferred.promise;
+			},
+
+			delete: function (todo) {	
+				store.todos.splice(store.todos.indexOf(todo), 1);
+				store._saveToLocalStorage(store.todos);
 			},
 		};
 
