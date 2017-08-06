@@ -44,9 +44,14 @@ angular.module('todomvc')
 				localStorage.setItem(STORAGE_ID, JSON.stringify(todos));
 			},
 
-			insert: function (todo) {
-				todos.add(todo);
-				_saveToLocalStorage(todos);
+			insert: function (todo) {	
+				var deferred = $q.defer();
+							
+				store.todos.push(todo);
+				store._saveToLocalStorage(store.todos);
+				
+				deferred.resolve(true);
+				return deferred.promise;
 			},
 
 			get: function () {

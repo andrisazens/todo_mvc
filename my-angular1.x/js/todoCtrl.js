@@ -11,17 +11,26 @@ angular.module('todomvc')
 
 		var todos = $scope.todos = store.todos;
 
-		$scope.newTodo = null;
+		$scope.newTodo = '';
+
 		$scope.addTodo = function () {
+			console.log("add todo");
 			let newTodo = {
-				title: $scope.newTodo.trim()
+				title: $scope.newTodo.trim()				
 			};
+
+			if (!newTodo.title) {
+				return;
+			}
+
+			$scope.saving = true;
 
 			store.insert(newTodo)
 			.then(function success() {
-
+				console.log("success");
+				$scope.newTodo = '';
 			}).finally(function () {
-
+				$scope.saving = false;
 			});
 		}
 	});
